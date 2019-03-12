@@ -1,36 +1,56 @@
 import React, {Component} from 'react';
+import Message from './message.jsx';
+import ChatBar from './ChatBar.jsx';
+import Footer1 from './foot1.jsx';
 import '../styles/application.scss';
+
+//import ReactDOM from 'react-dom';
+
+// main class
 class App extends Component {
   render() {
-    return (
+   return (
+     <div>
+       <ChatBar />
+   <h1>hello world</h1> 
+    <Message />
+   <Footer1 />
+    </div>
+   )
+  }
+ }
 
-      <html>
-      <head>
-        <meta charSet='utf-8'></meta>
-        <title>Chatty</title>
-  
-      </head>
+ export default App;
+ //render() {
+ //   return (
+   //   <h1>hell world</h1>
+
+      
+    
+    //  ) } }
+      /*
+    
+    class navBar extends Component {
+  render() {
+    return (
       <body>
       <nav className='navbar'>
         <a href="/" className="navbar-brand">Chatty</a>
       </nav>
-      <main className='messages'>
-        <div className="message">
-          <span classNames="message-username">Anonymous1</span>
-          <span className="message-content">I won't be impressed with technology until I can download food.</span>
-        </div>
-        <div className="message system">
-          Anonymous1 changed their name to nomnom.
-        </div>
-      </main>
+      </body>
+ ) } }
+
+
+ class footer1 extends Component {
+  render() {
+    return (
       <footer className="chatbar">
         <input className="chatbar-username" placeholder="Your Name (Optional)" />
         <input className="chatbar-message" placeholder="Type a message and hit ENTER" />
       </footer>
-      </body>
-      </html>
-
-    );
-  }
-}
+   
+   ) } }
+render()
+    
 export default App;
+*/
