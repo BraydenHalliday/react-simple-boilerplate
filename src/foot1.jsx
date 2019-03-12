@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
- class footer1 extends Component {
-    render() {
-      return (
-        <footer className="chatbar">
-          <input className="chatbar-username" placeholder="Your Name (Optional)" />
-          <input className="chatbar-message" placeholder="Type a message and hit ENTER" />
-        </footer>
-     
-     ) } }
-     export default footer1
+class header1 extends Component {
+  render() {
+    return (
+      
+        <nav className='navbar'>
+          <a href="/" className="navbar-brand">Chatty</a>
+        </nav>
+      
+    )
+  } 
+}
+     export default header1
