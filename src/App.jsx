@@ -10,7 +10,7 @@ import '../styles/application.scss';
 class App extends Component {
   constructor(props) {
     super(props);
-
+this.newMessage = this.newMessage.bind(this)
     this.state = {
       user: 'Brayden',
       messages: [
@@ -39,14 +39,24 @@ class App extends Component {
       this.setState({messages: messages})
     }, 3000);
   }
-  
+  newMessage (evt) {
+    console.log('the mans darren')
+    console.log(evt.keyCode)
+    if (evt.keyCode === 13) {
+      let theMessage = {id: Math.floor(100000 + Math.random() * 900000), username: this.state.user, content: evt.target.value};
+      const messages = this.state.messages.concat(theMessage)
+      this.setState({messages: messages})
+      evt.target.value = ''
+    }
+  };
+
   render() {
    return (
      <div>
      <Footer1 />
       <MessageList messages={this.state.messages}/>
        
-       <ChatBar  curerentUser={this.state.user}/>
+       <ChatBar  curerentUser={this.state.user} newMessage={this.newMessage}/>
     </div>
    )
   }
