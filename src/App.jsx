@@ -28,6 +28,7 @@ this.newMessage = this.newMessage.bind(this)
   };
   }
   componentDidMount() {
+    var socket = new WebSocket("ws://localhost:3001", console.log('Connected to server'));
     console.log("componentDidMount <App />");
     setTimeout(() => {
       console.log("Simulating incoming message");
@@ -40,8 +41,6 @@ this.newMessage = this.newMessage.bind(this)
     }, 3000);
   }
   newMessage (evt) {
-    console.log('the mans darren')
-    console.log(evt.keyCode)
     if (evt.keyCode === 13) {
       let theMessage = {id: Math.floor(100000 + Math.random() * 900000), username: this.state.user, content: evt.target.value};
       const messages = this.state.messages.concat(theMessage)
