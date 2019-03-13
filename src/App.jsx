@@ -12,40 +12,34 @@ class App extends Component {
     super(props);
 this.newMessage = this.newMessage.bind(this)
     this.state = {
-      user: 'Brayden',
-      messages: [
-        {
-          id: '1',
-          username: "Bob",
-          content: "Has anyone seen my marbles?",
-        },
-        {
-          id: '2',
-          username: "Anonymous",
-          content: "No, I think you lost them. You lost your marbles Bob. You lost them for good."
-        }
-      ]
+      user: 'Bob',
+      messages: []
   };
   }
   componentDidMount() {
     var socket = new WebSocket("ws://localhost:3001", console.log('Connected to server'));
     this.setState({socket: socket})
     console.log("componentDidMount <App />");
-    setTimeout(() => {
-      console.log("Simulating incoming message");
+    //setTimeout(() => {
+     // console.log("Simulating incoming message");
       // Add a new message to the list of messages in the data store
-      const newMessage = {id: 3, username: "Michelle", content: "Hello there!"};
-      const messages = this.state.messages.concat(newMessage)
+     // const newMessage = {id: 3, username: "Michelle", content: "Hello there!"};
+      //const messages = this.state.messages.concat(newMessage)
       // Update the state of the app component.
       // Calling setState will trigger a call to render() in App and all child components.
-      this.setState({messages: messages})
+     // this.setState({messages: messages})
     
-    }, 3000);
+   // }, 3000);
+  socket.onmessage = (event) => {
+    console.log(event.data);
+      const messages = this.state.messages.concat(JSON.parse(event.data))
+    this.setState({messages: messages})
   }
-  
+
+  }
   newMessage(evt) {
     if (evt.keyCode === 13) {
-      let theMessage = {id: Math.floor(100000 + Math.random() * 900000), username: this.state.user, content: evt.target.value};
+      let theMessage = {username: this.state.user, content: evt.target.value};
      // const messages = this.state.messages.concat(theMessage)
       //this.setState({messages: messages})
       this.state.socket.send(JSON.stringify(theMessage));
