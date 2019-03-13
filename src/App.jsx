@@ -29,6 +29,7 @@ this.newMessage = this.newMessage.bind(this)
   }
   componentDidMount() {
     var socket = new WebSocket("ws://localhost:3001", console.log('Connected to server'));
+    this.setState({socket: socket})
     console.log("componentDidMount <App />");
     setTimeout(() => {
       console.log("Simulating incoming message");
@@ -38,13 +39,16 @@ this.newMessage = this.newMessage.bind(this)
       // Update the state of the app component.
       // Calling setState will trigger a call to render() in App and all child components.
       this.setState({messages: messages})
+    
     }, 3000);
   }
-  newMessage (evt) {
+  
+  newMessage(evt) {
     if (evt.keyCode === 13) {
       let theMessage = {id: Math.floor(100000 + Math.random() * 900000), username: this.state.user, content: evt.target.value};
-      const messages = this.state.messages.concat(theMessage)
-      this.setState({messages: messages})
+     // const messages = this.state.messages.concat(theMessage)
+      //this.setState({messages: messages})
+      this.state.socket.send(JSON.stringify(theMessage));
       evt.target.value = ''
     }
   };
