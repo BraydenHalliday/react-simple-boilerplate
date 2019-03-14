@@ -15,7 +15,8 @@ this.newUser = this.newUser.bind(this)
     this.state = {
       user: 'Anon',
       messages: [],
-      notifications: []
+      notifications: [],
+      counter:'1'
   };
   }
   componentDidMount() {
@@ -45,14 +46,26 @@ this.newUser = this.newUser.bind(this)
       case 'incomingNotification':
        
         const obj = JSON.parse(event.data)
-        obj.content = `${obj.oldUserName} changed their name to ${obj.newUserName}`
+        obj.username = `${obj.oldUserName} changed their name to ${obj.newUserName}`
         console.log(obj)
-         const notification = this.state.notifications.concat(obj)
-         this.setState({notifications: notification})
+         const notification = this.state.messages.concat(obj)
+         this.setState({messages: notification})
          
 
-          break;
+        break;
+        case 'counterUpdate':
+       
+          const count = JSON.parse(event.data)
+
+          console.log(count)
+  
+           this.setState({counter: count.counter})
+           
+  
+            break;
+        
         default:
+
           // show an error in the console if the message type is unknown
          throw new Error("Unknown event type " + data.type);
       }
@@ -87,7 +100,7 @@ this.newUser = this.newUser.bind(this)
   render() {
    return (
      <div>
-     <Footer1 />
+     <Footer1 counter={this.state.counter}/>
       <MessageList messages={this.state.messages} notifications={this.state.notifications}/>
        
        <ChatBar  curerentUser={this.state.user} newMessage={this.newMessage} newUser={this.newUser}/>
