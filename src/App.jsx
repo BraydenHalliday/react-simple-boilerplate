@@ -11,9 +11,11 @@ class App extends Component {
   constructor(props) {
     super(props);
 this.newMessage = this.newMessage.bind(this)
+this.newUser = this.newUser.bind(this)
     this.state = {
-      user: 'Bob',
-      messages: []
+      user: 'Anon',
+      messages: [],
+      notifications: []
   };
   }
   componentDidMount() {
@@ -31,29 +33,64 @@ this.newMessage = this.newMessage.bind(this)
     
    // }, 3000);
   socket.onmessage = (event) => {
-    console.log(event.data);
-      const messages = this.state.messages.concat(JSON.parse(event.data))
-    this.setState({messages: messages})
+    const data = JSON.parse(event.data)
+   
+      //console.log(event.data);
+    switch(data.type) {
+      case 'incomingMessage':
+        const message = this.state.messages.concat(JSON.parse(event.data))
+        //console.log(message)
+        this.setState({messages: message})
+        break;
+      case 'incomingNotification':
+       
+        const obj = JSON.parse(event.data)
+        obj.content = `${obj.oldUserName} changed their name to ${obj.newUserName}`
+        console.log(obj)
+         const notification = this.state.notifications.concat(obj)
+         this.setState({notifications: notification})
+         
+
+          break;
+        default:
+          // show an error in the console if the message type is unknown
+         throw new Error("Unknown event type " + data.type);
+      }
+  
   }
 
   }
   newMessage(evt) {
     if (evt.keyCode === 13) {
-      let theMessage = {username: this.state.user, content: evt.target.value};
+      let theMessage = {type: "postMessage", username: this.state.user, content: evt.target.value};
      // const messages = this.state.messages.concat(theMessage)
       //this.setState({messages: messages})
       this.state.socket.send(JSON.stringify(theMessage));
       evt.target.value = ''
     }
   };
+  newUser(evt) {
+    let oldUserName = this.state.user
+    if (evt.keyCode === 13 && evt.target.value) {
+   
+   // console.log(oldUserName)
+     let newUserName = evt.target.value;
+     let theNotification = {type: "postNotification", oldUserName: oldUserName, newUserName : newUserName};
+     //console.log(theNotification)
+     this.state.socket.send(JSON.stringify(theNotification));
 
+      this.setState({user: newUserName})
+   console.log()
+   
+    }
+  };
   render() {
    return (
      <div>
      <Footer1 />
-      <MessageList messages={this.state.messages}/>
+      <MessageList messages={this.state.messages} notifications={this.state.notifications}/>
        
-       <ChatBar  curerentUser={this.state.user} newMessage={this.newMessage}/>
+       <ChatBar  curerentUser={this.state.user} newMessage={this.newMessage} newUser={this.newUser}/>
     </div>
    )
   }

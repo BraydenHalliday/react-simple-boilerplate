@@ -14,10 +14,11 @@ export class MessageList extends Component {
              <span className="message-content">{message.content}</span>
           </div>)}
         
-        
-        <div className="message system">
-            Anonymous1 changed their name to nomnom.
-          </div>
+          {this.props.notifications.map((notification) =>
+     <div className="notification" key={notification.id}>
+     <span className="notification-content">{notification.content}</span>
+   </div>
+          )}
         </main>
    ) } }
    export default MessageList
