@@ -1,8 +1,8 @@
 h1 {
-  color: tomato;
+  color: greenyellow;
 }
 body {
-  background: white;
+  background-image: url("https://atgbcentral.com/data/out/179/5556785-wallpaper-geometric.jpg");
   color: black;
   font-family: 'Open Sans', sans-serif;
   font-size: 14px;
@@ -10,7 +10,7 @@ body {
 }
 
 .chatbar {
-  background: tomato;
+  background: greenyellow;
   border-top: 1px solid black;
   bottom: 0;
   display: flex;
@@ -57,15 +57,20 @@ body {
 
 .message-content {
   flex: 8;
+  font-size: 18px;
+  background: skyblue
 }
 
 .message-username {
   flex: 2;
   font-weight: 700;
+  font-size: 22px;
+  background: skyblue;
+  background-size: 1em
 }
 
 .navbar {
-  background: tomato;
+  background: greenyellow;
   border-bottom: 1px solid black;
   height: 60px;
   left: 0;
@@ -92,4 +97,14 @@ body {
   margin-top: 0.7em;
   font-weight: 400;
   font-size: 22px;
+}
+.notification {
+  flex: 2;
+  font-size: 18px;
+  font-weight: 400;
+  margin-left: 1.1em;
+}
+.notification-content{
+color: black;
+background: red 
 }
